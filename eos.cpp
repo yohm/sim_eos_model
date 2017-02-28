@@ -11,8 +11,8 @@
 #include <iostream>
 #include <fstream>
 #include <math.h>
-#include "mt19937-64.c"
 #include <algorithm>
+#include <random>
 
 // CONSTANT PARAMETERS
 const int Maxtime = 100000000;
@@ -27,6 +27,8 @@ const int interval = 1000;// the interval for observation
 char filename[99];
 FILE *OACISfile;
 FILE *skimfile;
+
+std::mt19937_64 * pRnd;
 
 // Functions
 inline int min(int a, int b){return b < a ? b : a;}
@@ -73,7 +75,7 @@ int main(int argc, char *argv[]){
 	
 	// Initial Settings
     //Giving a random number seed
-    init_genrand64(iseed);
+  pRnd = new std::mt19937_64(iseed);
 	int n = InitialN;
 	int nlast = n;
 	int nint;
@@ -102,9 +104,11 @@ int main(int argc, char *argv[]){
 		for(int j = 0; j < nbond; j++){
 			int tmpwith = i;
 			while(tmpwith == i){// Get an off-diagonal connection
-				tmpwith = (genrand64_int63() % n);
+        std::uniform_int_distribution<int> dist(0,n);
+        tmpwith = dist( *pRnd );
 			}
-			if(genrand64_int63() % 2){
+      std::uniform_int_distribution<int> dist01(0,1);
+			if( dist01(*pRnd) ){
 				from[nint] = i;
 				to[nint] = tmpwith;
 			}
@@ -145,12 +149,17 @@ int main(int argc, char *argv[]){
 		debut[n] = t;
 		generation[n] = 1; // Generation starts from 1 (Note that the notation in the first paper was 0)
 		int nbond = M;
-        if(FlatDegree){ nbond = 1 + (genrand64_int63() % (2*M-1));}
+        if(FlatDegree){
+          std::uniform_int_distribution<int> dist(1, 2*M);
+          nbond = dist( *pRnd );
+        }
 		if(n < M){nbond = n;}
         
         for(int j = 0; j < nbond; j++){
-            int resident = (genrand64_int63() % n);
-            if(genrand64_int63() % 2){
+            std::uniform_int_distribution<int> dist(0,n);
+            int resident = dist( *pRnd );
+            std::uniform_int_distribution<int> dist01(0,1);
+            if( dist01(*pRnd) ){
                 from[nint+j] = n;
                 to[nint+j] = resident;
                 generation[resident]++;
@@ -160,7 +169,8 @@ int main(int argc, char *argv[]){
                 to[nint+j] = n;
             }
             if(FlatWeight){
-                amp[nint+j] = 2.0*genrand64_real3()-1.0;
+              std::uniform_real_distribution<double> uni(-1.0,1.0);
+              amp[nint+j] = uni(*pRnd);
             }else{
                 amp[nint+j] = Gaussian();
             }
@@ -405,25 +415,11 @@ int main(int argc, char *argv[]){
 }
 
 ///// Return a Random Number from the Gaussian Distribution with <r> = 0.0, <r^2> = 1.0
-/////////////////////////////////////////// "genrand64_real3()" gives Uniform Distribution in (0, 1)
-double Gaussian(void){
-	static double V1, V2, S;
-	static int phase = 0;
-	double X;
-	if(phase == 0) {
-		do {
-			double U1 = genrand64_real3();
-			double U2 = genrand64_real3();
-			V1 = 2 * U1 - 1;
-			V2 = 2 * U2 - 1;
-			S = V1 * V1 + V2 * V2;
-		} while(S >= 1 || S == 0);
-		X = V1 * sqrt(-2 * log(S) / S);
-	} else
-		X = V2 * sqrt(-2 * log(S) / S);
-	phase = 1 - phase;
-	return X;
+double Gaussian(void) {
+  std::normal_distribution<double> nd;
+  return nd(*pRnd);
 }
+
 ///// Return the Least Fit Species
 int FindExt(int nspecies, int n_incubate, double *fitness){
 	int here = -1;
