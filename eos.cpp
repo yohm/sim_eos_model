@@ -86,7 +86,6 @@ int main(int argc, char *argv[]){
   //Giving a random number seed
   pRnd = new std::mt19937_64(iseed);
   int n = InitialN;
-  int nlast = n;
   int nint;
   double sumf;
 
