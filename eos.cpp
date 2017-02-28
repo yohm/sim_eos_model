@@ -37,6 +37,15 @@ int FindExt(int nspecies, int n_incubate, double *fitness);
 
 // MAIN
 int main(int argc, char *argv[]){
+  if( argc != 5 ) {
+    std::cerr << "Error! wrong number of arguments." << std::endl
+      << "USAGE: ./a.out model_TYPE, #_of_interactions_per_species, SimulationTime, iseed" << std::endl
+      << "  < model_TYPE >" << std::endl
+      << "    model_TYPE % 2 -> 0: fixed M, 1: flat degree distribution in (1,M)" << std::endl
+      << "    (model_TYPE/2) % 2 -> 0: Gaussian link weight, 1: flat weight distribution" << std::endl
+      << "    Therefore, 0: standard model, 1: flat degree, 2: flat link weight, 3: flat deg. & weight" << std::endl;
+    exit(1);
+  }
   // Get the Number of Interactions
   int model_TYPE = atoi(argv[1]);
   int FlatDegree = model_TYPE % 2;
