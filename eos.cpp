@@ -104,7 +104,7 @@ int main(int argc, char *argv[]){
 		for(int j = 0; j < nbond; j++){
 			int tmpwith = i;
 			while(tmpwith == i){// Get an off-diagonal connection
-        std::uniform_int_distribution<int> dist(0,n);
+        std::uniform_int_distribution<int> dist(0,n-1);
         tmpwith = dist( *pRnd );
 			}
       std::uniform_int_distribution<int> dist01(0,1);
@@ -156,7 +156,7 @@ int main(int argc, char *argv[]){
 		if(n < M){nbond = n;}
         
         for(int j = 0; j < nbond; j++){
-            std::uniform_int_distribution<int> dist(0,n);
+            std::uniform_int_distribution<int> dist(0,n-1);
             int resident = dist( *pRnd );
             std::uniform_int_distribution<int> dist01(0,1);
             if( dist01(*pRnd) ){
