@@ -53,7 +53,6 @@ int main(int argc, char *argv[]){
   int M = atoi(argv[2]);
   int SimTime = atoi(argv[3]);
   int iseed = atoi(argv[4]);
-  iseed %= 1000;
 
   // File handles
   //// for OACIS
@@ -62,8 +61,7 @@ int main(int argc, char *argv[]){
     return 0;
   }
   //// main output files
-  int iname = iseed;
-  sprintf(filename, "eos_type%01d_m%02di%03d.dat", model_TYPE, M, iname);
+  sprintf(filename, "timeseries.dat");
   if((skimfile=fopen(filename,"w"))==NULL){
     exit(0);
   }
