@@ -1,1 +1,4 @@
 *.out
+_output.json
+*.dat
+
