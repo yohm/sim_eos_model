@@ -403,7 +403,7 @@ int main(int argc, char *argv[]){
   fprintf(OACISfile, "\"Average Degree\": %f,\n", oacis_avem);
   fprintf(OACISfile, "\"Assortativity\": %f,\n", oacis_asso*norm);
   fprintf(OACISfile, "\"Clustering Coefficient\": %f,\n", oacis_cc*norm);
-  fprintf(OACISfile, "\"C.C./random C.C.\": %f\n", oacis_ccratio*norm);
+  fprintf(OACISfile, "\"CC/random CC\": %f\n", oacis_ccratio*norm);
   fprintf(OACISfile, "}\n");
   fclose(OACISfile);
 
