@@ -47,7 +47,7 @@ For example,
 
 # Installer
 
-Run `install.sh` will compile the codes and then registers the simulator on OACIS.
+Run `install.sh` to compile the code and register it on OACIS.
 
 ```sh
 git clone https://github.com/yohm/sim_eos_model.git && sim_eos_model/install.sh
