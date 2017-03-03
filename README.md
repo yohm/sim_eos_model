@@ -47,9 +47,10 @@ For example,
 
 # Installer
 
-Run `install.sh` to compile the code and register it on OACIS.
+Set `OACIS_ROOT` environment variable and run `install.sh` to compile the code and register it on OACIS.
 
 ```sh
+export OACIS_ROOT="~/oacis"
 git clone https://github.com/yohm/sim_eos_model.git && sim_eos_model/install.sh
 ```
 
