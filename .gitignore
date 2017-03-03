@@ -1,4 +1,5 @@
 *.out
 _output.json
 *.dat
+*.png
 
