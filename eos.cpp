@@ -14,6 +14,7 @@ Therefore, 0: standard model, 1: flat degree, 2: flat link weight, 3: flat deg. 
 #include <algorithm>
 #include <random>
 
+// test 0303
 // CONSTANT PARAMETERS
 const int Maxtime = 100000000;
 const int maxN = 10000;// It is set to be small, for the casual test on OACIS. One need larger maxN for the determination of transition point.
