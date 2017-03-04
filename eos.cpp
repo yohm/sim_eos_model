@@ -344,17 +344,17 @@ int main(int argc, char *argv[]){
             int you = connected[me][i];
             for(int j=0; j<deg[you]; j++){
               int him = connected[you][j];
+              ntriple++;
               for(int k=0; k<deg[him]; k++){
                 if(connected[him][k] == me){ntriangle++;}
-                ntriple++;
               }
             }
           }
         }
         double cc = 0.0;
-        if(ntriple > 0){cc = 3.0*ntriangle/ntriple;}
+        if(ntriple > 0){cc = ((double) ntriangle)/((double) ntriple);}
         double cctorandom = cc;
-        if(nint > 1){cctorandom *= n*(n-1)/((double) nint);}
+        if(nint > 1){cctorandom *= n*(n-1)/((double) nint)/2.0;}
 
         // DELETION of CONNECTIVITY ARRAY
         for(int i=0; i<n; i++){delete[] connected[i];}
